@@ -1,11 +1,11 @@
+import os
 from flask import Flask, request, send_file, jsonify
 from cryptography.fernet import Fernet
 import io
 
 app = Flask(__name__)
 
-# 固定された暗号化キー（教師ごとに個別の鍵を利用する場合、管理を別途考慮する必要があります）
-key = Fernet.generate_key()  # 必要に応じて固定の鍵を使用してください
+key = Fernet.generate_key()
 cipher = Fernet(key)
 
 @app.route("/")
@@ -13,7 +13,7 @@ def home():
     return jsonify({
         "message": "Welcome to the Encryption Service!",
         "instruction": "POST a file to /encrypt to get it encrypted.",
-        "key": key.decode()  # 教師が鍵を知る必要がある場合のみ表示
+        "key": key.decode()
     })
 
 @app.route("/encrypt", methods=["POST"])
@@ -24,7 +24,6 @@ def encrypt_file():
     file = request.files["file"]
     data = file.read()
 
-    # ファイルを暗号化
     encrypted_data = cipher.encrypt(data)
     encrypted_file = io.BytesIO(encrypted_data)
     encrypted_file.name = "encrypted_file.enc"
@@ -32,4 +31,5 @@ def encrypt_file():
     return send_file(encrypted_file, as_attachment=True)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)
