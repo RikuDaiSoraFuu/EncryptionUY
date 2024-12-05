@@ -35,5 +35,7 @@ def encrypt():
         mimetype="text/plain"
     )
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
+if __name__ == "__main__":
+    # Renderが指定するポートを使用
+    port = int(os.environ.get("PORT", 5000))  # デフォルトは5000
+    app.run(host="0.0.0.0", port=port)
