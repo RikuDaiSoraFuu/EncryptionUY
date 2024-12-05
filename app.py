@@ -12,7 +12,7 @@ def xor_encrypt(data, key):
     return encrypted
 
 @app.route('/encrypt', methods=['POST'])
-def encrypt_file():
+def encrypt():
     if 'file' not in request.files:
         return "No file uploaded", 400
     file = request.files['file']
