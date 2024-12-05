@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 # 固定の秘密鍵（必要に応じて変更してください）
-SECRET_KEY = "simple_key"
+SECRET_KEY = "qzd8M1VrOvYb9NiPlNxaT_vZQlBcOxj8W-FpkYv5lwY="
 
 def xor_encrypt(data: bytes, key: str) -> bytes:
     key = key * (len(data) // len(key) + 1)  # キーを繰り返してデータ長に合わせる
